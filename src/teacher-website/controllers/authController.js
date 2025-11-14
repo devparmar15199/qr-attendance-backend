@@ -11,7 +11,7 @@ const generateToken = (id) => {
 export const registerTeacher = async (req, res) => {
   console.log('Teacher registration request received:', req.body);
   try {
-    const { name, fullName, email, password } = req.body;
+    const { name, fullName, email, password, role } = req.body;
     // Use fullName if provided, otherwise use name
     const teacherName = fullName || name;
     console.log('Extracted teacher data:', { name: teacherName, email });
@@ -38,7 +38,7 @@ export const registerTeacher = async (req, res) => {
       fullName: teacherName,
       email,
       password, // Will be hashed by pre-save hook
-      role: 'teacher'
+      role
     };
 
     console.log('Creating teacher with data:', { ...userData, password: '[HIDDEN]' });
