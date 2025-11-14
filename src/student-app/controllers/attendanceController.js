@@ -269,11 +269,16 @@ export const getMyAttendanceSummary = async (req, res) => {
 
     // 2. Find total held sessions (Denominator)
     // A "held" session is one that is in the past and was not 'cancelled'
-    const totalHeldSessions = await Attendance.countDocuments({
+    // const totalHeldSessions = await Attendance.countDocuments({
+    //   classId: { $in: classIds },
+    //   // scheduledDate: { $lte: new Date() }, // In the past or today
+    //   // status: { $ne: 'cancelled' }
+    // });
+
+    const heldSessionIds = await Attendance.distinct('sessionId', {
       classId: { $in: classIds },
-      // scheduledDate: { $lte: new Date() }, // In the past or today
-      // status: { $ne: 'cancelled' }
-    });
+    })
+    const totalHeldSessions = heldSessionIds.length;
 
     // 3. Find total attended sessions (Numerator)
     const totalAttendedSessions = await Attendance.countDocuments({
@@ -315,11 +320,16 @@ export const getMyClassAttendanceSummary = async (req, res) => {
     const { classId } = req.params;
 
     // 1. Find total held sessions for this class (Denominator)
-    const totalHeldSessions = await Attendance.countDocuments({
+    // const totalHeldSessions = await Attendance.countDocuments({
+    //   classId: classId,
+    //   // scheduledDate: { $lte: new Date() },
+    //   // status: { $ne: 'cancelled' }
+    // });
+
+    const heldSessionIds = await Attendance.distinct('sessionId', {
       classId: classId,
-      // scheduledDate: { $lte: new Date() },
-      // status: { $ne: 'cancelled' }
     });
+    const totalHeldSessions = heldSessionIds.length;
 
     // 2. Find total attended sessions for this class (Numerator)
     const totalAttendedSessions = await Attendance.countDocuments({
