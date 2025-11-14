@@ -73,7 +73,7 @@ export const loginTeacher = async (req, res) => {
     const { email, password } = req.body;
 
     // Check for user email and ensure it's a teacher
-    const user = await User.findOne({ email, role: 'teacher' });
+    const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({
