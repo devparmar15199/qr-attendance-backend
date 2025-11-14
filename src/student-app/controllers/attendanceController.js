@@ -317,8 +317,8 @@ export const getMyClassAttendanceSummary = async (req, res) => {
     // 1. Find total held sessions for this class (Denominator)
     const totalHeldSessions = await Attendance.countDocuments({
       classId: classId,
-      scheduledDate: { $lte: new Date() },
-      status: { $ne: 'cancelled' }
+      // scheduledDate: { $lte: new Date() },
+      // status: { $ne: 'cancelled' }
     });
 
     // 2. Find total attended sessions for this class (Numerator)
