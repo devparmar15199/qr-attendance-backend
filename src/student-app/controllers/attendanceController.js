@@ -315,7 +315,7 @@ export const getMyClassAttendanceSummary = async (req, res) => {
     const { classId } = req.params;
 
     // 1. Find total held sessions for this class (Denominator)
-    const totalHeldSessions = await ScheduleInstance.countDocuments({
+    const totalHeldSessions = await Attendance.countDocuments({
       classId: classId,
       scheduledDate: { $lte: new Date() },
       status: { $ne: 'cancelled' }
