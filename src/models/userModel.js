@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
   },
   division: {
     type: String,
-    required: function() { return this.role === 'student'; }
+    required: false,
   },
   /**
    * The S3 object key for the user's registered face image.
